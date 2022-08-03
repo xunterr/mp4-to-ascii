@@ -6,18 +6,18 @@
 using namespace cv;
 using namespace std;
 
-Frame::Frame(int w, int h, Mat source, char *s, int n)
+Frame::Frame(int w, int h, Mat source, char **s)
 {
-    aspect = (source.cols) / source.rows;
+    aspect = source.cols / (double)(source.rows * 2);
     width = w;
     height = h * aspect;
     frame = new char[width * height + 1];
     frame[width * height] = '\0';
-    symbols = s;
-    processMatrix(source, n);
+    symbols = *s;
+    processMatrix(source);
 }
 
-int Frame::processMatrix(Mat source, int n)
+int Frame::processMatrix(Mat source)
 {
     Mat image;
     resize(source, image, Size(width, height), INTER_LINEAR);
@@ -30,7 +30,7 @@ int Frame::processMatrix(Mat source, int n)
             int g = pixel[1];
             int b = pixel[2];
             double brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-            int s_index = brightness * n;
+            int s_index = brightness * strlen(symbols);
             frame[i * image.size().width + j] = symbols[s_index];
         }
     }

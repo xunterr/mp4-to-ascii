@@ -22,7 +22,9 @@ int main(int, char **)
     // cout << "Path to file: ";
     // cin >> path;
 
-    VideoCapture video("C:/Users/User/Downloads/y2mate.com - Валентин Стрыкало  Наше лето_v720P.mp4");
+    char *symbols = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^`'";
+
+    VideoCapture video("C:/Users/User/Downloads/skull.mp4");
     Mat source;
 
     if (!video.isOpened())
@@ -37,8 +39,8 @@ int main(int, char **)
             return -1;
         }
 
-        Frame *frame = new Frame(width, height, source, "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^`'", 67);
-        cout << frame->getFrame();
+        Frame *frame = new Frame(width, height, source, &symbols);
+        printf("%s", frame->getFrame());
     }
 
     return 0;

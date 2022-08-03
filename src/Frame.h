@@ -11,12 +11,12 @@ class Frame
 private:
     char *frame;
     int width, height;
-    int aspect;
+    double aspect;
     char *symbols;
 
-    int processMatrix(Mat source, int n);
+    int processMatrix(Mat source);
 
 public:
-    Frame(int width, int height, Mat source, char *symbols, int n);
+    Frame(int width, int height, Mat source, char **symbols);
     char *getFrame();
 };
