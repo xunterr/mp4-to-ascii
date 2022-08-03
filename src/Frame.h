@@ -13,10 +13,10 @@ private:
     int width, height;
     double aspect;
     char *symbols;
-
+    
     int processMatrix(Mat source);
 
 public:
-    Frame(int width, int height, Mat source, char **symbols);
+    Frame(Size size, Mat source, char **symbols);
     char *getFrame();
 };

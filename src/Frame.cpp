@@ -1,18 +1,18 @@
-#include <iostream>
-#include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include "Frame.h"
 
 using namespace cv;
 using namespace std;
 
-Frame::Frame(int w, int h, Mat source, char **s)
+Frame::Frame(Size size, Mat source, char **s)
 {
-    aspect = source.cols / (double)(source.rows * 2);
-    width = w;
-    height = h * aspect;
-    frame = new char[width * height + 1];
+    this->aspect = source.cols / (double)(source.rows * 2);
+    this->width = size.width;
+    this->height = size.height * aspect;
+
+    this->frame = new char[width * height + 1];
     frame[width * height] = '\0';
+
     symbols = *s;
     processMatrix(source);
 }
