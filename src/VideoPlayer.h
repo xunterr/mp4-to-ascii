@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <opencv2/core.hpp>
+#include "Video.h"
 
 using namespace cv;
 
@@ -10,8 +11,12 @@ class VideoPlayer
 public:
     VideoPlayer();
     VideoPlayer(char **pallete);
-    int play(char *path, Size size);
+    Size getSize();
+    void setSize(Size size);
+    int play(char *path);
 
 private:
     char *pallete;
+    Size size;
+    Video *load(char *path);
 };

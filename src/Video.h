@@ -3,7 +3,7 @@
 #include <queue>
 #include "Frame.h"
 
-struct
+typedef struct Video
 {
     queue<Frame> frames;
-} Video;
+};
