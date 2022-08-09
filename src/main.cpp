@@ -6,25 +6,25 @@ using namespace std;
 
 int main(int, char **)
 {
-    VideoPlayer player;
+    VideoPlayer player("$@M#*ZO0QCJUYXvxrjft|()[]_+~<>lI:,^    ");
     string path;
     int width;
     int height;
 
-    cout << "Full path to the video: " << endl;
-    cin >> path;
+    cout << "Full path to the video: \n";
+    getline(cin, path);
 
-    cout << "Output width: " << endl;
+    cout << "Output width: \n";
     cin >> width;
 
-    cout << "Output height: " << endl;
+    cout << "Output height: \n";
     cin >> height;
 
     player.setSize(Size(width, height));
 
     try
     {
-        player.play("C:/Users/User/Downloads/skull.mp4");
+        player.play(path);
     }
     catch (const char *msg)
     {

@@ -1,6 +1,10 @@
 #include <opencv2/videoio.hpp>
+#include <chrono>
 #include "Video.h"
 #include "VideoPlayer.h"
+
+using namespace std;
+using namespace cv;
 
 VideoPlayer::VideoPlayer()
 {
@@ -8,27 +12,35 @@ VideoPlayer::VideoPlayer()
     this->pallete = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^`'";
 }
 
-VideoPlayer::VideoPlayer(char **palette)
+VideoPlayer::VideoPlayer(char *pallete)
 {
-    this->pallete = *palette;
+    this->pallete = pallete;
 }
 
-int VideoPlayer::play(char *path)
+int VideoPlayer::play(string path)
 {
-    Video video = *load(path);
+    VideoCapture capture(path);
+    Video video = *load(capture);
+    int fps = capture.get(CAP_PROP_FPS);
+
+    auto time_between_frames = chrono::microseconds(std::chrono::seconds(1)) / fps;
+    auto target_tp = chrono::system_clock::now();
+
+    system("cls");
 
     for (size_t i = 0; i < video.frames.size(); i++)
     {
         printf("%s", video.frames.front().getFrame());
         video.frames.pop();
+        target_tp += time_between_frames;
+        this_thread::sleep_until(target_tp);
     }
 
     return 0;
 }
 
-Video *VideoPlayer::load(char *path)
+Video *VideoPlayer::load(VideoCapture video)
 {
-    VideoCapture video(path);
     Mat source;
 
     if (!video.isOpened())
@@ -48,6 +60,7 @@ Video *VideoPlayer::load(char *path)
         Frame *frame = new Frame(this->size, source, &pallete);
         result->frames.push(*frame);
     }
+    video.release();
     return result;
 }
 
